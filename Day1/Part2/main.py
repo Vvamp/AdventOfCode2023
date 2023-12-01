@@ -19,15 +19,6 @@ number_declarations = {
 }
 
 
-class IdentifiedDigit:
-    def __init__(self, digit_string, start_index, line):
-        self.digit = number_declarations[digit_string]
-        self.digit_string = digit_string
-        self.start_index = start_index
-        self.full_string = line
-        self.end_index = start_index + len(self.digit_string)
-
-
 def formatNumberTextsToDigits(puzzle_input: str) -> str:
     for line_index in range(0, len(puzzle_input)):
         line = puzzle_input[line_index].replace("\n", "")
