@@ -3,9 +3,10 @@
 Welcome to my github repo where I share my solutions for the [Advent of Code 2023](https://adventofcode.com/2023) challenges. As a passionate programmer and embedded software student, I'm tackling these puzzles to sharpen my skills and have fun along the way!
 
 I'll be making my solutions in C#, due to the beautiful functionality of LINQ.
-I made the first day in python, but redid it in C# later on. 
+I made the first day in python, but redid it in C# later on.
 
 ## 👨‍🏫 Teachers
+
 Unfortunately, I won't be competing for INNO points. The reason is that I can't make it to the required classes on tuesdays.
 
 ## 🌟 Challenges and Completion Times
@@ -22,8 +23,14 @@ The times are in the format `HH:mm:ss` (Although seconds are left out).
 
 If you want to have a competition, feel free to join my private leaderboard(full is full!).
 
->! ID: 1016489-968fe61d
+<details>
+  <summary>Open for invite code</summary>
 
+```Python
+# Leaderboard Invite Code: 1016489-968fe61d
+```
+
+</details>
 
 ---
 
