@@ -118,11 +118,11 @@ namespace AOC
             };
             foreach (var set in game.CubeColorCounts)
             {
-                foreach (var key in set.Keys)
+                foreach (var color in set.Keys)
                 {
-                    var count = set[key];
-                    if (count > minCubesPerColor[key])
-                        minCubesPerColor[key] = count;
+                    var currentColorCount = set[color];
+                    if (currentColorCount > minCubesPerColor[color])
+                        minCubesPerColor[color] = currentColorCount;
                 }
             }
             return minCubesPerColor;
@@ -133,14 +133,14 @@ namespace AOC
             int sum = 0;
             foreach (var game in games)
             {
-                var min = GetMinCubesPerGame(game);
+                var cubeColorCounts = GetMinCubesPerGame(game);
                 int curpow = 0;
-                foreach (var key in min.Keys)
+                foreach (var color in cubeColorCounts.Keys)
                 {
                     if (curpow == 0)
-                        curpow = min[key];
+                        curpow = cubeColorCounts[color];
                     else
-                        curpow *= min[key];
+                        curpow *= cubeColorCounts[color];
                 }
                 sum += curpow;
 
