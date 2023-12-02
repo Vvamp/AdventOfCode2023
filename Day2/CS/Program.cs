@@ -15,10 +15,10 @@
             };
 
             // Part 1
-            Console.WriteLine($"Puzzle Part 1 Result: {await Part1.GetSumOfCubes(goal, inputData)}");
+            Console.WriteLine($"Puzzle Part 1 Result: {Part1.GetSumOfCubes(goal, inputData)}");
 
             // Part 2
-            Console.WriteLine($"Puzzle Part 2 Result: {await Part2.GetSumOfPowerOfCubes(inputData)}");
+            Console.WriteLine($"Puzzle Part 2 Result: {Part2.GetSumOfPowerOfCubes(inputData)}");
 
         }
     };

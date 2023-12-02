@@ -15,39 +15,41 @@ namespace AOC
     }
     public class Game
     {
-        public Game(int GameId, List<Dictionary<CubeColor, int>> colordict)
+        public Game(int GameId, List<Dictionary<CubeColor, int>> CubeColorCounts)
         {
             this.GameId = GameId;
-            this.CountPerDictionary = colordict;
+            this.CubeColorCounts = CubeColorCounts;
         }
         public int GameId { get; set; }
-        public List<Dictionary<CubeColor, int>> CountPerDictionary { get; set; }
+        public List<Dictionary<CubeColor, int>> CubeColorCounts { get; set; }
     }
     public static class Part1
     {
 
-        public static async Task<List<Game>> GetGamesByPuzzleInput(string[] puzzleinput)
+        public static List<Game> GetGamesByPuzzleInput(string[] puzzleinput)
         {
             List<Game> gameList = new List<Game>();
-            Regex gamerx = new Regex(@"Game (\d+)");
-            Regex colorrx = new Regex(@"(\d+) (blue|red|green)");
+            Regex gameIdRegex = new Regex(@"Game (\d+)");
+            Regex colorRegex = new Regex(@"(\d+) (blue|red|green)");
             foreach (var line in puzzleinput)
             {
-                // Regex for gameId
-                var idmatches = gamerx.Matches(line);
-                var digit = Int32.Parse(idmatches.FirstOrDefault()?.Groups[1].Value);
-                if (digit == null)
-                    continue;
-                List<Dictionary<CubeColor, int>> cubeColorList = new List<Dictionary<CubeColor, int>>();
+                // Regex for GameId
+                var idmatches = gameIdRegex.Matches(line);
+                var gameNumber = Int32.Parse(idmatches.First().Groups[1].Value); // Prone to errors in input but works for valid input
 
+                List<Dictionary<CubeColor, int>> cubeColorCountsList = new List<Dictionary<CubeColor, int>>();
+
+                // Split by set in each game
                 foreach (var set in line.Split(";"))
                 {
-                    var colormatches = colorrx.Matches(set);
-                    Dictionary<CubeColor, int> countsByCubeColor = new Dictionary<CubeColor, int>(){
+                    var colormatches = colorRegex.Matches(set);
+                    Dictionary<CubeColor, int> cubeColorCounts = new Dictionary<CubeColor, int>(){
                         { CubeColor.Red, 0},
                         { CubeColor.Blue, 0},
                         { CubeColor.Green, 0}
                     };
+
+                    // Grab each color and add the count to the dictionary
                     foreach (Match match in colormatches)
                     {
                         var colorCount = Int32.Parse(match.Groups[1].Value);
@@ -55,31 +57,33 @@ namespace AOC
                         switch (color)
                         {
                             case "red":
-                                countsByCubeColor[CubeColor.Red] += colorCount;
+                                cubeColorCounts[CubeColor.Red] += colorCount;
                                 break;
                             case "blue":
-                                countsByCubeColor[CubeColor.Blue] += colorCount;
+                                cubeColorCounts[CubeColor.Blue] += colorCount;
                                 break;
                             case "green":
-                                countsByCubeColor[CubeColor.Green] += colorCount;
+                                cubeColorCounts[CubeColor.Green] += colorCount;
                                 break;
                         }
                     }
-                    cubeColorList.Add(countsByCubeColor);
+
+                    // Add the current set's dictionary to the list
+                    cubeColorCountsList.Add(cubeColorCounts);
                 }
-                var newGame = new Game(digit, cubeColorList);
+                var newGame = new Game(gameNumber, cubeColorCountsList);
                 gameList.Add(newGame);
 
             }
             return gameList;
         }
 
-        public static async Task<bool> IsGamePossible(Dictionary<CubeColor, int> goalPerCubeColor, Game game)
+        public static bool IsGamePossible(Dictionary<CubeColor, int> goalPerCubeColor, Game game)
         {
             foreach (var key in goalPerCubeColor.Keys)
             {
                 var targetCount = goalPerCubeColor[key];
-                foreach (var countPerDictionary in game.CountPerDictionary)
+                foreach (var countPerDictionary in game.CubeColorCounts)
                 {
                     var gameCount = countPerDictionary[key];
                     if (gameCount > targetCount)
@@ -90,31 +94,29 @@ namespace AOC
             }
             return true;
         }
-        public static async Task<int> GetSumOfCubes(Dictionary<CubeColor, int> goalPerCubeColor, string[] puzzleinput)
+        public static int GetSumOfCubes(Dictionary<CubeColor, int> goalPerCubeColor, string[] puzzleinput)
         {
-            var games = await GetGamesByPuzzleInput(puzzleinput);
-            int sum = 0;
-            foreach (var game in games)
-            {
-                if (await IsGamePossible(goalPerCubeColor, game))
-                {
-                    sum += game.GameId;
-                }
-            }
-            return sum;
+            var games = GetGamesByPuzzleInput(puzzleinput);
+            // int sum = 0;
+            // return sum;
+
+            return games
+                        .Where(game => IsGamePossible(goalPerCubeColor, game))
+                        .Sum(game => game.GameId);
+
         }
     }
 
     public static class Part2
     {
-        public static async Task<Dictionary<CubeColor, int>> GetMinCubesPerGame(Game game)
+        public static Dictionary<CubeColor, int> GetMinCubesPerGame(Game game)
         {
             Dictionary<CubeColor, int> minCubesPerColor = new Dictionary<CubeColor, int>(){
                 { CubeColor.Red, 0},
                 { CubeColor.Blue, 0},
                 { CubeColor.Green, 0}
             };
-            foreach (var set in game.CountPerDictionary)
+            foreach (var set in game.CubeColorCounts)
             {
                 foreach (var key in set.Keys)
                 {
@@ -125,13 +127,13 @@ namespace AOC
             }
             return minCubesPerColor;
         }
-        public static async Task<int> GetSumOfPowerOfCubes(string[] puzzleinput)
+        public static int GetSumOfPowerOfCubes(string[] puzzleinput)
         {
-            var games = await Part1.GetGamesByPuzzleInput(puzzleinput);
+            var games = Part1.GetGamesByPuzzleInput(puzzleinput);
             int sum = 0;
             foreach (var game in games)
             {
-                var min = await GetMinCubesPerGame(game);
+                var min = GetMinCubesPerGame(game);
                 int curpow = 0;
                 foreach (var key in min.Keys)
                 {
@@ -139,7 +141,6 @@ namespace AOC
                         curpow = min[key];
                     else
                         curpow *= min[key];
-                    // Console.Write($"{key}: {min[key]}");
                 }
                 sum += curpow;
 
