@@ -16,12 +16,22 @@ namespace AOC
 
         public static async Task<string[]> ReadLinesByFilename(string[] mainArgs)
         {
-            var filename = mainArgs.FirstOrDefault();
+            var filename = "";
             string[] lines = new string[0];
+            bool firstPass = true;
             while (filename == null || filename == "")
             {
-                Console.Write("$ Enter a puzzle input filename > ");
-                filename = Console.ReadLine();
+                if (firstPass)
+                {
+                    filename = mainArgs.FirstOrDefault();
+                    firstPass = false;
+                }
+
+                if (filename == null)
+                {
+                    Console.Write("$ Enter a puzzle input filename > ");
+                    filename = Console.ReadLine();
+                }
                 try
                 {
 #pragma warning disable CS8604 // Disable possible null ref(it will never be null due to the catch)
