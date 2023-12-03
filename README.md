@@ -11,8 +11,8 @@ Unfortunately, I won't be competing for INNO points. The reason is that I can't 
 
 ## 🌟 Challenges and Completion Times
 
-Below is the list of challenges I've completed along with the time it took me to solve each. I'm using a system of golden and silver stars to indicate my performance on each day, similar to the AOC system.
-The times are from opening the puzzle to submition. The times are not cumulative(so if part 2 has a time of 1 hour, it took me 1 hour for only part 2. Part 1 is excluded).
+Below is the list of challenges I've completed along with the time it took me to solve each. I'm using a system of golden and silver stars to indicate my performance on each day, similar to the AOC system. The code won't be pretty on most days, as I am just puzzling to find the solution the fastest. I might optimize some days later on, but this is not guaranteed.
+The times are from opening the puzzle to submission. The times are not cumulative(so if part 2 has a time of 1 hour, it took me 1 hour for only part 2. Part 1 is excluded).
 The times are in the format `HH:mm:ss` (Although seconds are left out).
 
 - **Day 1:** ⭐⭐ - `00:30:00` / `01:22:00`
