@@ -18,6 +18,7 @@ The times are in the format `HH:mm:ss` (Although seconds are left out).
 - **Day 1:** ⭐⭐ - `00:30:00` / `01:22:00`
 - **Day 2:** ⭐⭐ - `01:06:00` / `00:14:00`
 - **Day 3:** ⭐⭐ - `00:56:00` / `00:08:00`
+- **Day 4:** ⭐⭐ - `00:28:00` / `00:20:00`
 - _Other Days In Progress_
 
 ## Private Leaderboard
